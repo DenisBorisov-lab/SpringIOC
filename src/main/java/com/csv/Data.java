@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Data {
     private Map<String, Integer> map = new HashMap<>();
-    private Set<String> questions = new HashSet<>();
+    private List<String> questions = new ArrayList<>();
 
     public void generateData() {
         CsvReader reader = new CsvReader();
@@ -23,7 +23,7 @@ public class Data {
         return map;
     }
 
-    public Set<String> getQuestions() {
+    public List<String> getQuestions() {
         generateData();
         return questions;
     }
