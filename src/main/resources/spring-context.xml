@@ -3,4 +3,15 @@
        xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="cvsReader" class="com.csv.CsvReader">
+        <property name="path" value="data.csv"/>
+    </bean>
+
+    <bean id="dataEnricher" class="com.csv.DataEnricher">
+        <constructor-arg name="reader" ref="cvsReader"/>
+    </bean>
+
+    <bean id="appearance" class="com.service.Appearance">
+        <constructor-arg name="dataEnricher" ref="dataEnricher"/>
+    </bean>
 </beans>

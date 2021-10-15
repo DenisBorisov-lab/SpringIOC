@@ -1,25 +1,38 @@
 package com.csv;
 
+import lombok.Setter;
 import lombok.SneakyThrows;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+@Setter
 public class CsvReader {
+    private String path;
+
     @SneakyThrows
-    public List<List<String>> read() {
-        List<List<String>> records = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader("./src/main/resources/data.csv"))) {
+    public List<String> read() {
+        List<String> array = new ArrayList<>();
+        InputStream is = getClass().getClassLoader().getResourceAsStream(path);
+        try (InputStreamReader streamReader =
+                     new InputStreamReader(is, StandardCharsets.UTF_8);
+             BufferedReader reader = new BufferedReader(streamReader)) {
+
             String line;
-            while ((line = br.readLine()) != null) {
-                String[] values = line.split("\\.");
-                records.add(Arrays.asList(values));
+            while ((line = reader.readLine()) != null) {
+                array.add(line);
             }
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return records;
+
+        return array;
     }
 
 }
